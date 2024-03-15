@@ -2,65 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PastExam;
 use App\Http\Requests\StorePastExamRequest;
-use App\Http\Requests\UpdatePastExamRequest;
+use App\Models\PastExam;
+use App\Models\PreparationType;
 
 class PastExamController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of past exams for a preparation type.
+     *
+     * @param PreparationType $preparationType
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(PreparationType $preparationType)
     {
-        //
+        $pastExams = $preparationType->pastExams;
+
+        return view('past_exams.index', compact('pastExams', 'preparationType'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new past exam.
+     *
+     * @param PreparationType $preparationType
+     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(PreparationType $preparationType)
     {
-        //
+        return view('past_exams.create', compact('preparationType'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created past exam in storage.
+     *
+     * @param  StorePastExamRequest  $request
+     * @param  PreparationType $preparationType
+     * @return \Illuminate\Http\Response
      */
-    public function store(StorePastExamRequest $request)
+    public function store(StorePastExamRequest $request, PreparationType $preparationType)
     {
-        //
+        $pastExam = $preparationType->pastExams()->create($request->validated());
+
+        return redirect()->route('past_exams.index', $preparationType)->with('success', 'Past exam created successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(PastExam $pastExam)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(PastExam $pastExam)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdatePastExamRequest $request, PastExam $pastExam)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(PastExam $pastExam)
-    {
-        //
-    }
+    // ... (Optional methods like edit, update, and delete can be added based on requirements)
 }
