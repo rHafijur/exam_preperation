@@ -11,7 +11,7 @@ class Topic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'chapter_id']; // Fillable attributes
+    protected $fillable = ['name', 'topic_no', 'chapter_id']; // Fillable attributes
 
     public function chapter()
     {

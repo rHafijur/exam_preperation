@@ -9,12 +9,8 @@ class PastExam extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['year', 'preparation_type_id']; // Fillable attributes
+    protected $fillable = ['year',]; // Fillable attributes
 
-    public function preparationType()
-    {
-        return $this->belongsTo(PreparationType::class);
-    }
 
     public function mcqQuestions()
     {

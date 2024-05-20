@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
@@ -20,11 +19,12 @@ return new class extends Migration
             $table->string('option_3');
             $table->string('option_4');
             $table->string('correct_option');
-            $table->integer('difficulty_level')->nullable(); // Allow null values for difficulty
-            $table->string('explaination');
+            $table->float('difficulty_level')->comment("Easy = 1.0; Medium = 2.5; Hard = 4.0");
+            $table->text('explaination');
             $table->string('description');
 
             $table->foreign('topic_id')->references('id')->on('topics')->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

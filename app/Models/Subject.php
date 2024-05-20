@@ -11,7 +11,7 @@ class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name']; // Fillable attributes
+    protected $fillable = ['name','display_name']; // Fillable attributes
 
     public function preparationTypes()
     {
