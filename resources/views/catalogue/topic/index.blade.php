@@ -23,7 +23,7 @@
                                                 $subject_id = \App\Models\Chapter::find(request()->chapter_id)
                                                     ->subject_id;
                                             } else {
-                                                $sujbect_id = request()->subject_id;
+                                                $subject_id = request()->subject_id;
                                             }
                                         @endphp
                                         <x-forms.select name="subject_id" :select2="true" label="Subject"
