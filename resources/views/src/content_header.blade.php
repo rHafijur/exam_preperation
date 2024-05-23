@@ -13,7 +13,7 @@
         $words = explode(' ', $title);
 
         // Remove any words that are numeric
-        $words = array_filter($words, function($word) {
+        $words = array_filter($words, function ($word) {
             return !is_numeric($word);
         });
 
@@ -44,7 +44,7 @@
         $currentUrl = url('/');
         foreach ($segments as $segment) {
             if (!empty($segment)) {
-                $currentUrl .= '/'.$segment;
+                $currentUrl .= '/' . $segment;
                 $breadcrumbs[] = ['url' => $currentUrl, 'text' => ucwords(str_replace('-', ' ', $segment))];
             }
         }
@@ -56,17 +56,17 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1>{{ urlToTitle(request()->url()) }}</h1>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>@yield('title')</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    @foreach (urlToBreadcrumb(request()->url()) as $breadcrumb)
+                        <li class="breadcrumb-item"><a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['text'] }}</a></li>
+                    @endforeach
+                </ol>
+            </div>
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            @foreach (urlToBreadcrumb(request()->url()) as $breadcrumb)
-                <li class="breadcrumb-item"><a href="{{ $breadcrumb['url'] }}">{{ $breadcrumb['text'] }}</a></li>
-            @endforeach
-          </ol>
-        </div>
-      </div>
     </div><!-- /.container-fluid -->
-  </section>
+</section>

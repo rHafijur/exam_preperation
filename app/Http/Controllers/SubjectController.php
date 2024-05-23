@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Core\Utill;
+use App\Models\Subject;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
-use App\Models\Subject;
 use App\Models\PreparationType; // Assuming association with PreparationType
 
 class SubjectController extends Controller
@@ -16,9 +17,9 @@ class SubjectController extends Controller
      */
     public function index()
     {
-        $subjects = Subject::all();
+        $subjects = Subject::orderBy('display_order')->paginate(Utill::perPageItem());
 
-        return view('subjects.index', compact('subjects'));
+        return view('catalogue.subject.index', compact('subjects'));
     }
 
     /**
@@ -28,9 +29,8 @@ class SubjectController extends Controller
      */
     public function create()
     {
-        $preparationTypes = PreparationType::all(); // For selecting associated preparation type
 
-        return view('subjects.create', compact('preparationTypes'));
+        return view('catalogue.subject.create');
     }
 
     /**
@@ -43,10 +43,8 @@ class SubjectController extends Controller
     {
         $subject = Subject::create($request->validated());
 
-        // Attach the subject to the selected preparation type(s) (if applicable)
-        $subject->preparationTypes()->attach($request->preparation_type_ids);
 
-        return redirect()->route('subjects.index')->with('success', 'Subject created successfully!');
+        return redirect()->route('subject.index')->with('success', 'Subject created successfully!');
     }
 
     /**
@@ -58,7 +56,7 @@ class SubjectController extends Controller
     public function show(Subject $subject)
     {
         // Consider including associated preparation types or other relevant data
-        return view('subjects.show', compact('subject'));
+        return view('catalogue.subject.show', compact('subject'));
     }
 
     /**
@@ -69,9 +67,8 @@ class SubjectController extends Controller
      */
     public function edit(Subject $subject)
     {
-        $preparationTypes = PreparationType::all(); // For selecting associated preparation types
-        
-        return view('subjects.edit', compact('subject', 'preparationTypes'));
+
+        return view('catalogue.subject.edit', compact('subject'));
     }
 
     /**
@@ -85,10 +82,7 @@ class SubjectController extends Controller
     {
         $subject->update($request->validated());
 
-        // Update the attached preparation types based on the request
-        $subject->preparationTypes()->sync($request->preparation_type_ids);
-
-        return redirect()->route('subjects.index')->with('success', 'Subject updated successfully!');
+        return redirect()->route('subject.index')->with('success', 'Subject updated successfully!');
     }
 
     /**
@@ -101,6 +95,6 @@ class SubjectController extends Controller
     {
         $subject->delete();
 
-        return redirect()->route('subjects.index')->with('success', 'Subject deleted successfully!');
+        return redirect()->route('subject.index')->with('success', 'Subject deleted successfully!');
     }
 }

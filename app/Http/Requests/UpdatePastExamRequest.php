@@ -11,7 +11,7 @@ class UpdatePastExamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('update past_exam');
     }
 
     /**

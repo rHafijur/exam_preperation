@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fleet</title>
+    <title>BCS Class | | @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -61,7 +61,7 @@
             <div class="float-right d-none d-sm-block">
                 <b>Version</b> 1.0.0
             </div>
-            <strong>Copyright &copy; 2018-2023 <a href="https://folbaba.com">folbaba.com</a>.</strong> All rights
+            <strong>Copyright &copy; 2024-2025 <a href="https://bcsclass.com">bcsclass.com</a>.</strong> All rights
             reserved.
         </footer>
 

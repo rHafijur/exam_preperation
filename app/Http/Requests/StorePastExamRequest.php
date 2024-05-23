@@ -11,7 +11,7 @@ class StorePastExamRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('create past_exam');
     }
 
     /**

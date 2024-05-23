@@ -11,7 +11,7 @@ class UpdateSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('update subject');
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateSubjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => "required|string|max:255|unique:subjects,name,{$this->route('subject')->id},id",
+            'display_name' => 'required|string|max:255',
+            'display_order' => 'nullable|integer'
         ];
     }
 }

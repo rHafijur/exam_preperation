@@ -11,7 +11,7 @@ class UpdateMcqQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('update mcq_question');
     }
 
     /**

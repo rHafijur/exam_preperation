@@ -11,7 +11,7 @@ class StoreMcqQuestionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('create mcq_question');
     }
 
     /**

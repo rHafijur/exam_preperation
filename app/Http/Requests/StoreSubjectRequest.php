@@ -11,7 +11,8 @@ class StoreSubjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return \Auth::user()->can('create subject');
+        ;
     }
 
     /**
@@ -23,6 +24,8 @@ class StoreSubjectRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|unique:subjects',
+            'display_name' => 'required|string|max:255',
+            'display_order' => 'nullable|integer'
         ];
     }
 }
