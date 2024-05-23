@@ -18,6 +18,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label for="">Name</label>
                                             <input type="text" name="name" class="form-control" placeholder="Name"
                                                 value="{{ request()->name }}">
                                         </div>

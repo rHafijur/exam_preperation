@@ -20,6 +20,13 @@
                                         <x-forms.select name="subject_id" :select2="true" label="Subject"
                                             :options="$subjects" valueKey="id" labelKey="name" :value="request()->subject_id" />
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="">Name</label>
+                                            <input type="text" name="name" class="form-control" placeholder="Name"
+                                                value="{{ request()->name }}">
+                                        </div>
+                                    </div>
                                     {{-- <div class="col-md-4">
                                         <div class="form-group">
                                             <select name="is_active" class="form-control" placeholder="Status">
@@ -70,9 +77,9 @@
                                 <td>
                                     <x-edit-action-button :id="$chapter->id" module="chapter" />
                                     {{-- <x-delete-action-button :id="$chapter->id" module="chapter" /> --}}
-                                    {{-- <a href="{{ route('chapter.employees', $chapter->id) }}">
-                                        <button class="btn btn-sm btn-success"><i class="fa fa-users"></i></button>
-                                    </a> --}}
+                                    <a href="{{ route('topic.index') }}?chapter_id={{ $chapter->id }}">
+                                        <button class="btn btn-sm btn-success"><i class="fa fa-star"></i> Topics</button>
+                                    </a>
                                 </td>
                             </tr>
                         @empty

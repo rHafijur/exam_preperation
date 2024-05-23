@@ -13,6 +13,10 @@ class Chapter extends Model
 
     public function scopeFilter($query, $filters)
     {
+        if(isset($filters['name'])  &&  $filters['name'] != null) {
+            $query->where('name', 'like', "%".$filters['name']."%");
+        }
+
         if(isset($filters['subject_id'])  &&  $filters['subject_id'] != null) {
             $query->where('subject_id', $filters['subject_id']);
         }

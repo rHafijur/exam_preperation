@@ -25,6 +25,15 @@ class Subject extends Model
         ->logOnly(['name', 'display_name']);
     }
 
+    public function scopeFilter($query, $filters)
+    {
+        if(isset($filters['name'])  &&  $filters['name'] != null) {
+            $query->where('name', 'like', "%".$filters['name']."%");
+        }
+    }
+
+
+
 
     public function chapters()
     {

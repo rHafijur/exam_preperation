@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTopicRequest;
-use App\Http\Requests\UpdateTopicRequest;
+use App\Core\Utill;
 use App\Models\Topic;
 use App\Models\Chapter;
+use App\Models\Subject;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 
-class TopicsController extends Controller
+class TopicController extends Controller
 {
+    private function subjects()
+    {
+        return Subject::with('chapters')->orderBy('display_order')->get();
+    }
+
     /**
      * Display a listing of topics for a chapter.
      *
      * @param Chapter $chapter
      * @return \Illuminate\Http\Response
      */
-    public function index(Chapter $chapter)
+    public function index(Request $request)
     {
-        $topics = $chapter->topics;
+        $subjects = $this->subjects();
+        $topics = Topic::with('chapter.subject')->filter(['name' => $request->name, 'chapter_id' => $request->chapter_id, 'subject_id' => $request->subject_id])->paginate(Utill::perPageItem());
 
-        return view('topics.index', compact('topics', 'chapter'));
+        return view('catalogue.topic.index', compact('topics', 'subjects'));
     }
 
     /**
@@ -28,9 +37,10 @@ class TopicsController extends Controller
      * @param Chapter $chapter
      * @return \Illuminate\Http\Response
      */
-    public function create(Chapter $chapter)
+    public function create()
     {
-        return view('topics.create', compact('chapter'));
+        $subjects = $this->subjects();
+        return view('catalogue.topic.create', compact('subjects'));
     }
 
     /**
@@ -40,11 +50,11 @@ class TopicsController extends Controller
      * @param  Chapter $chapter
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTopicRequest $request, Chapter $chapter)
+    public function store(StoreTopicRequest $request)
     {
-        $topic = $chapter->topics()->create($request->validated());
+        $topic = Topic::create($request->validated());
 
-        return redirect()->route('topics.index', $chapter)->with('success', 'Topic created successfully!');
+        return redirect()->route('topic.index')->with('success', 'Topic created successfully!');
     }
 
     /**
@@ -55,7 +65,9 @@ class TopicsController extends Controller
      */
     public function edit(Topic $topic)
     {
-        return view('topics.edit', compact('topic'));
+        $subjects = $this->subjects();
+        $chapters = $topic->chapter->subject->chapters;
+        return view('catalogue.topic.edit', compact('topic', 'subjects', 'chapters'));
     }
 
     /**
@@ -69,7 +81,7 @@ class TopicsController extends Controller
     {
         $topic->update($request->validated());
 
-        return redirect()->route('topics.index', $topic->chapter)->with('success', 'Topic updated successfully!');
+        return redirect()->route('topic.index', $topic->chapter)->with('success', 'Topic updated successfully!');
     }
 
     /**
@@ -82,6 +94,6 @@ class TopicsController extends Controller
     {
         $topic->delete();
 
-        return redirect()->route('topics.index', $topic->chapter)->with('success', 'Topic deleted successfully!');
+        return redirect()->route('topic.index', $topic->chapter)->with('success', 'Topic deleted successfully!');
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Core\Utill;
 use App\Models\Subject;
+use Illuminate\Http\Request;
 use App\Http\Requests\StoreSubjectRequest;
 use App\Http\Requests\UpdateSubjectRequest;
 use App\Models\PreparationType; // Assuming association with PreparationType
@@ -15,9 +16,9 @@ class SubjectController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::orderBy('display_order')->paginate(Utill::perPageItem());
+        $subjects = Subject::orderBy('display_order')->filter(['name' => $request->name])->paginate(Utill::perPageItem());
 
         return view('catalogue.subject.index', compact('subjects'));
     }

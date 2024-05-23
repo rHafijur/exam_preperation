@@ -24,7 +24,7 @@ class ChapterController extends Controller
     public function index(Request $request)
     {
         $subjects = $this->subjects();
-        $chapters = Chapter::with('subject')->filter(['subject_id' => $request->subject_id])->paginate(Utill::perPageItem());
+        $chapters = Chapter::with('subject')->filter(['name' => $request->name, 'subject_id' => $request->subject_id])->paginate(Utill::perPageItem());
 
         return view('catalogue/chapter.index', compact('chapters', 'subjects'));
     }

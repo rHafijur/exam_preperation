@@ -22,7 +22,9 @@ class UpdateTopicRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'topic_no' => 'required|string|max:255',
+            'chapter_id' => 'required|integer|exists:chapters,id',
         ];
     }
 }

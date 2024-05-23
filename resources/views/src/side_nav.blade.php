@@ -42,7 +42,7 @@
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-                  <li class="nav-item {{ active(['subject.index', 'chapter.index']) }}">
+                  <li class="nav-item {{ active(['subject.index', 'chapter.index', 'topic.index']) }}">
                       <a href="#" class="nav-link">
                           <i class="nav-icon fas fa-tachometer-alt"></i>
                           <p>
@@ -61,6 +61,12 @@
                               <a href="{{ route('chapter.index') }}" class="nav-link {{ active('chapter.index') }}">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Chapters</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('topic.index') }}" class="nav-link {{ active('topic.index') }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Topics</p>
                               </a>
                           </li>
                       </ul>

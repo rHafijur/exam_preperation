@@ -23,6 +23,7 @@ class StoreTopicRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'topic_no' => 'required|string|max:255',
             'chapter_id' => 'required|integer|exists:chapters,id',
         ];
     }
