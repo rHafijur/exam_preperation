@@ -22,7 +22,10 @@ class UpdateChapterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
+            'chapter_no' => 'required|string|max:255',
+            'description' => 'nullable|string', // Optional description field
+            'subject_id' => 'required|integer|exists:subjects,id',
         ];
     }
 }

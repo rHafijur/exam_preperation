@@ -9,7 +9,14 @@ class Chapter extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'display_name', 'chapter_name', 'description', 'subject_id']; // Fillable attributes
+    protected $fillable = ['name', 'chapter_no', 'description', 'subject_id']; // Fillable attributes
+
+    public function scopeFilter($query, $filters)
+    {
+        if(isset($filters['subject_id'])  &&  $filters['subject_id'] != null) {
+            $query->where('subject_id', $filters['subject_id']);
+        }
+    }
 
     public function subject()
     {

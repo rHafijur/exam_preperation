@@ -2,35 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreChapterRequest;
-use App\Http\Requests\UpdateChapterRequest;
+use App\Core\Utill;
 use App\Models\Chapter;
 use App\Models\Subject;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreChapterRequest;
+use App\Http\Requests\UpdateChapterRequest;
 
 class ChapterController extends Controller
 {
+    private function subjects()
+    {
+        return Subject::orderBy('display_order')->get();
+    }
     /**
      * Display a listing of chapters for a subject.
      *
      * @param Subject $subject
      * @return \Illuminate\Http\Response
      */
-    public function index(Subject $subject)
+    public function index(Request $request)
     {
-        $chapters = $subject->chapters;
+        $subjects = $this->subjects();
+        $chapters = Chapter::with('subject')->filter(['subject_id',$request->subject_id])->paginate(Utill::perPageItem());
 
-        return view('chapters.index', compact('chapters', 'subject'));
+        return view('catalogue/chapter.index', compact('chapters', 'subjects'));
     }
 
     /**
      * Show the form for creating a new chapter.
      *
-     * @param Subject $subject
      * @return \Illuminate\Http\Response
      */
-    public function create(Subject $subject)
+    public function create()
     {
-        return view('chapters.create', compact('subject'));
+        $subjects = $this->subjects();
+        return view('catalogue/chapter.create', compact('subjects'));
     }
 
     /**
@@ -40,11 +47,12 @@ class ChapterController extends Controller
      * @param  Subject $subject
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreChapterRequest $request, Subject $subject)
+    public function store(StoreChapterRequest $request)
     {
-        $chapter = $subject->chapters()->create($request->validated());
+        // dd($request->validated());
+        $chapter = Chapter::create($request->validated());
 
-        return redirect()->route('chapters.index', $subject)->with('success', 'Chapter created successfully!');
+        return redirect()->route('chapter.index')->with('success', 'Chapter created successfully!');
     }
 
     /**
@@ -55,7 +63,8 @@ class ChapterController extends Controller
      */
     public function edit(Chapter $chapter)
     {
-        return view('chapters.edit', compact('chapter'));
+        $subjects = $this->subjects();
+        return view('catalogue/chapter.edit', compact('chapter', 'subjects'));
     }
 
     /**
@@ -69,7 +78,7 @@ class ChapterController extends Controller
     {
         $chapter->update($request->validated());
 
-        return redirect()->route('chapters.index', $chapter->subject)->with('success', 'Chapter updated successfully!');
+        return redirect()->route('chapter.index', $chapter->subject)->with('success', 'Chapter updated successfully!');
     }
 
     // ... (Optional methods like destroy can be added based on requirements)

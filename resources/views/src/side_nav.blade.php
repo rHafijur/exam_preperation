@@ -18,7 +18,7 @@
               </div>
           </div>
 
-          {{-- @php
+          @php
               function active($routes)
               {
                   if (is_array($routes)) {
@@ -34,13 +34,37 @@
                   }
                   return '';
               }
-          @endphp --}}
+          @endphp
           <!-- Sidebar Menu -->
           <nav class="mt-2">
               <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                   data-accordion="false">
                   <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+
+                  <li class="nav-item {{ active(['subject.index', 'chapter.index']) }}">
+                      <a href="#" class="nav-link">
+                          <i class="nav-icon fas fa-tachometer-alt"></i>
+                          <p>
+                              Catalogue
+                              <i class="right fas fa-angle-left"></i>
+                          </p>
+                      </a>
+                      <ul class="nav nav-treeview">
+                          <li class="nav-item">
+                              <a href="{{ route('subject.index') }}" class="nav-link {{ active('subject.index') }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Subjects</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
+                              <a href="{{ route('chapter.index') }}" class="nav-link {{ active('chapter.index') }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Chapters</p>
+                              </a>
+                          </li>
+                      </ul>
+                  </li>
 
                   {{-- @if (auth()->user()->roles->contains(function ($role, $i) {
             return $role->id == 4;
