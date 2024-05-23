@@ -70,9 +70,9 @@
                                 <td>
                                     <x-edit-action-button :id="$subject->id" module="subject" />
                                     {{-- <x-delete-action-button :id="$subject->id" module="subject" /> --}}
-                                    {{-- <a href="{{ route('subject.employees', $subject->id) }}">
-                                        <button class="btn btn-sm btn-success"><i class="fa fa-users"></i></button>
-                                    </a> --}}
+                                    <a href="{{ route('chapter.index') }}?subject_id={{ $subject->id }}">
+                                        <button class="btn btn-sm btn-success"><i class="fa fa-star"></i> Chapters</button>
+                                    </a>
                                 </td>
                             </tr>
                         @empty

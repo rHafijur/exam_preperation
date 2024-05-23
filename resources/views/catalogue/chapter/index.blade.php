@@ -17,10 +17,8 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <div class="form-group">
-                                            <input type="text" name="name" class="form-control" placeholder="Name"
-                                                value="{{ request()->name }}">
-                                        </div>
+                                        <x-forms.select name="subject_id" :select2="true" label="Subject"
+                                            :options="$subjects" valueKey="id" labelKey="name" :value="request()->subject_id" />
                                     </div>
                                     {{-- <div class="col-md-4">
                                         <div class="form-group">
