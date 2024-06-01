@@ -52,6 +52,12 @@
                       </a>
                       <ul class="nav nav-treeview">
                           <li class="nav-item">
+                              <a href="{{ route('past_exam.index') }}" class="nav-link {{ active('past_exam.index') }}">
+                                  <i class="far fa-circle nav-icon"></i>
+                                  <p>Past Exams</p>
+                              </a>
+                          </li>
+                          <li class="nav-item">
                               <a href="{{ route('subject.index') }}" class="nav-link {{ active('subject.index') }}">
                                   <i class="far fa-circle nav-icon"></i>
                                   <p>Subjects</p>

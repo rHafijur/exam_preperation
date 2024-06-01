@@ -23,7 +23,6 @@ class StorePastExamRequest extends FormRequest
     {
         return [
             'year' => 'required|integer',
-            'preparation_type_id' => 'required|integer|exists:preparation_types,id',
         ];
     }
 }
